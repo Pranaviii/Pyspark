@@ -1,5 +1,49 @@
 # Day 2 — Transformations and Aggregations
 
+## Reference Links
+
+### Concept Videos
+
+#### PySpark Transformations vs Actions
+
+* https://www.youtube.com/results?search_query=TechTFQ+Spark+Transformations+and+Actions
+* https://www.youtube.com/results?search_query=Data+with+Danny+PySpark+Transformations+Actions
+
+#### Lazy Evaluation in Spark
+
+* https://www.youtube.com/results?search_query=Spark+Lazy+Evaluation+Explained
+
+#### PySpark Aggregations
+
+* https://www.youtube.com/results?search_query=PySpark+groupBy+aggregations+Simplilearn
+* https://www.youtube.com/results?search_query=PySpark+aggregations+TechBrothersIT
+
+---
+
+## Practice Problem Links
+
+### groupBy(), agg(), count(), avg(), sum()
+
+* https://sparkbyexamples.com/pyspark/pyspark-groupby-explained-with-example/
+* https://sparkbyexamples.com/pyspark/pyspark-aggregate-functions/
+* https://www.geeksforgeeks.org/pyspark-groupby-dataframe-with-aggregation-or-count/
+
+---
+
+### distinct()
+
+* https://sparkbyexamples.com/pyspark/pyspark-distinct-to-drop-duplicates/
+* https://www.geeksforgeeks.org/how-to-find-distinct-values-of-multiple-columns-in-pyspark/
+
+---
+
+### Aggregation Practice Questions
+
+* https://www.interviewquestionspdf.com/2023/08/pyspark-dataframes-practice-questions.html
+* https://ashishcoder.com/courses/pyspark/groupby-in-pyspark.html
+
+---
+
 # Topics Covered
 
 ## 1. Narrow vs Wide Transformations
@@ -187,6 +231,12 @@ sales_df = spark.createDataFrame(data, columns)
 
 Find category with highest total sales.
 
+### Concepts Used
+
+* groupBy()
+* aggregations
+* sorting
+
 ### Solution
 
 ```python
@@ -198,12 +248,6 @@ sales_df.groupBy("category") \
     .show()
 ```
 
-Concepts:
-
-* groupBy()
-* aggregations
-* sorting
-
 ---
 
 # P2 — Count Duplicate Categories
@@ -211,6 +255,11 @@ Concepts:
 ### Objective
 
 Find frequency of categories.
+
+### Concepts Used
+
+* groupBy()
+* count()
 
 ### Solution
 
@@ -220,14 +269,17 @@ sales_df.groupBy("category") \
     .show()
 ```
 
-Concepts:
-
-* groupBy()
-* count()
-
 ---
 
 # P3 — Region Wise Sales Summary
+
+### Concepts Used
+
+* groupBy()
+* agg()
+* avg()
+* sum()
+* count()
 
 ```python
 from pyspark.sql.functions import avg, sum, count
@@ -349,6 +401,34 @@ summary_df.orderBy("total_sales", ascending=False).show()
 ```python
 summary_df.write.csv("sales_summary", header=True)
 ```
+
+---
+
+# Important Day 2 Concepts
+
+## Transformations
+
+Operations that create new DataFrames.
+
+Examples:
+
+* filter()
+* select()
+* withColumn()
+* groupBy()
+
+---
+
+## Actions
+
+Operations that trigger execution.
+
+Examples:
+
+* show()
+* collect()
+* count()
+* write()
 
 ---
 

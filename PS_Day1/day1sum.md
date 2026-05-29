@@ -1,18 +1,26 @@
 # Day 1 — PySpark Fundamentals
-## reference links 
-concept video - https://www.youtube.com/watch?v=EB8lfdxpirM&list=PLwFJcsJ61ouiU1wvzzRk3pjU8xT9buJhr&index=11
-### problems 
-Filter Employees with Salary > X 
+
+## Reference Links
+
+### Concept Video
+- https://www.youtube.com/watch?v=EB8lfdxpirM&list=PLwFJcsJ61ouiU1wvzzRk3pjU8xT9buJhr&index=11
+
+---
+
+# Problems & Practice Links
+
+## Filter Employees with Salary > X
 - https://www.geeksforgeeks.org/python/filtering-rows-based-on-column-values-in-pyspark-dataframe/?utm_source=chatgpt.com
 - https://sparkbyexamples.com/pyspark/pyspark-where-filter/?utm_source=chatgpt.com
 
-Add New Column Using Conditions
+## Add New Column Using Conditions
 - https://builtin.com/data-science/pyspark-dataframe?utm_source=chatgpt.com
 - https://www.interviewquestionspdf.com/2023/08/pyspark-dataframes-practice-questions.html?utm_source=chatgpt.com
 
-Good Hands-On Practice Site
+## Good Hands-On Practice Site
 - https://ashishcoder.com/courses/pyspark/filter-dataframe-in-pyspark.html?utm_source=chatgpt.com
 
+---
 
 # Topics Covered
 
@@ -22,11 +30,11 @@ PySpark is the Python API for Apache Spark.
 
 Apache Spark is a distributed data processing engine used for:
 
-* big data processing
-* ETL pipelines
-* machine learning
-* streaming
-* analytics
+- big data processing
+- ETL pipelines
+- machine learning
+- streaming
+- analytics
 
 PySpark allows us to write Spark code using Python.
 
@@ -40,17 +48,17 @@ Spark mainly consists of:
 
 The main program that:
 
-* creates SparkSession
-* controls execution
-* sends tasks to executors
+- creates SparkSession
+- controls execution
+- sends tasks to executors
 
 ## Executors
 
 Workers that:
 
-* execute tasks
-* process data
-* return results
+- execute tasks
+- process data
+- return results
 
 ## Cluster
 
@@ -95,8 +103,8 @@ df = spark.read.csv("employees.csv", header=True, inferSchema=True)
 
 Important arguments:
 
-* `header=True`
-* `inferSchema=True`
+- `header=True`
+- `inferSchema=True`
 
 ---
 
@@ -124,7 +132,7 @@ df.printSchema()
 
 ## select()
 
-Select columns.
+Select specific columns.
 
 ```python
 df.select("name", "salary")
@@ -134,7 +142,7 @@ df.select("name", "salary")
 
 ## filter()
 
-Filter rows.
+Filter rows based on conditions.
 
 ```python
 df.filter(df.salary > 5000)
@@ -166,18 +174,18 @@ df.drop("bonus")
 
 # Coding Problems
 
-## P1 — Filter Employees with Salary > X
+# P1 — Filter Employees with Salary > X
 
-### Objective
+## Objective
 
 Filter employees earning more than a certain salary.
 
-### Concepts Used
+## Concepts Used
 
-* filter()
-* conditions
+- filter()
+- conditions
 
-### Example
+## Example
 
 ```python
 df.filter(df.salary > 5000).show()
@@ -187,17 +195,17 @@ df.filter(df.salary > 5000).show()
 
 # P2 — Add New Column Using Conditions
 
-### Objective
+## Objective
 
 Create conditional columns using business logic.
 
-### Concepts Used
+## Concepts Used
 
-* withColumn()
-* when()
-* otherwise()
+- withColumn()
+- when()
+- otherwise()
 
-### Example
+## Example
 
 ```python
 from pyspark.sql.functions import when
@@ -237,20 +245,36 @@ df_clean.write.csv("clean_output", header=True)
 
 # Practice Problems Completed
 
-## Q4 — Sort Products by Price
+# Q4 — Sort Products by Price
+
+## Problem
+
+Display all products sorted from highest price to lowest price.
+
+## Solution
 
 ```python
 df.orderBy(df.price.desc()).show()
 ```
 
-Concepts:
+## Concepts
 
-* sorting
-* orderBy()
+- sorting
+- orderBy()
 
 ---
 
-## Q5 — Create Inventory Value Column
+# Q5 — Create Inventory Value Column
+
+## Problem
+
+Create a new column:
+
+```text
+inventory_value = quantity * price
+```
+
+## Solution
 
 ```python
 from pyspark.sql.functions import col
@@ -261,14 +285,27 @@ df = df.withColumn(
 )
 ```
 
-Concepts:
+## Concepts
 
-* withColumn()
-* arithmetic operations
+- withColumn()
+- arithmetic operations
 
 ---
 
-## Q6 — Discounted Price Column
+# Q6 — Discounted Price Column
+
+## Problem
+
+Create discounted price based on category.
+
+Rules:
+
+- Electronics → 15% discount
+- Clothing → 10% discount
+- Books → 5% discount
+- Others → 8% discount
+
+## Solution
 
 ```python
 from pyspark.sql.functions import when
@@ -282,17 +319,31 @@ df = df.withColumn(
 )
 ```
 
-Concepts:
+## Concepts
 
-* conditional columns
-* when()
-* otherwise()
+- conditional columns
+- when()
+- otherwise()
 
 ---
 
-## Q7 — Stock Status Column
+# Q7 — Stock Status Column
+
+## Problem
+
+Create stock status column.
+
+Conditions:
+
+- quantity < 10 → Low Stock
+- quantity between 10 and 30 → Medium Stock
+- quantity > 30 → High Stock
+
+## Solution
 
 ```python
+from pyspark.sql.functions import when
+
 df = df.withColumn(
     "stock_status",
     when(df.quantity < 10, "Low Stock")
@@ -301,36 +352,96 @@ df = df.withColumn(
 )
 ```
 
+## Concepts
+
+- conditional transformations
+- multiple conditions
+
 ---
 
-## Q8 — Convert Data Types
+# Q8 — Convert Data Types
+
+## Problem
+
+Convert:
+
+- quantity → IntegerType
+- price → DoubleType
+
+Then print schema.
+
+## Solution
 
 ```python
 from pyspark.sql.types import IntegerType, DoubleType
 
 df = df.withColumn("quantity", df.quantity.cast(IntegerType()))
 df = df.withColumn("price", df.price.cast(DoubleType()))
+
+df.printSchema()
 ```
+
+## Concepts
+
+- cast()
+- printSchema()
 
 ---
 
-## Q9 — Filter High Inventory Value
+# Q9 — Filter High Inventory Value
+
+## Problem
+
+Show products where:
+
+```text
+quantity * price > 5000
+```
+
+## Solution
 
 ```python
 df.filter((df.quantity * df.price) > 5000).show()
 ```
 
+## Concepts
+
+- filtering
+- derived columns
+- expressions
+
 ---
 
-## Q10 — Top 5 Most Expensive Products
+# Q10 — Top 5 Most Expensive Products
+
+## Problem
+
+Display top 5 products with highest price.
+
+## Solution
 
 ```python
 df.orderBy(df.price.desc()).limit(5).show()
 ```
 
+## Concepts
+
+- sorting
+- limiting rows
+
 ---
 
-## Q11 — Category Analytics
+# Q11 — Category Analytics
+
+## Problem
+
+For each category find:
+
+- total number of products
+- average price
+- total inventory value
+
+## Solution
 
 ```python
 from pyspark.sql.functions import sum, avg, count
@@ -342,9 +453,26 @@ df.groupBy("category").agg(
 ).show()
 ```
 
+## Concepts
+
+- groupBy()
+- aggregations
+- count()
+- avg()
+- sum()
+
 ---
 
-## Q12 — Clean Null Values
+# Q12 — Clean Null Values
+
+## Problem
+
+Replace:
+
+- null quantity → 0
+- null price → average price
+
+## Solution
 
 ```python
 from pyspark.sql.functions import avg
@@ -355,7 +483,7 @@ df_clean = df.fillna({"quantity": 0})
 df_clean = df_clean.fillna({"price": avg_price})
 ```
 
-### Explanation
+## Explanation
 
 `collect()` returns rows as a list.
 
@@ -365,38 +493,46 @@ Example:
 [Row(avg(price)=123.45)]
 ```
 
-* First `[0]` → first row
-* Second `[0]` → first column value
+- First `[0]` → first row
+- Second `[0]` → first column value
 
-Result:
+Final result:
 
-* extracts actual average number
+```python
+123.45
+```
 
 ---
 
 # Important Day 1 Concepts
 
-## Transformations
+# Transformations
 
 Operations that create new DataFrames.
 
 Examples:
 
-* select()
-* filter()
-* withColumn()
+- select()
+- filter()
+- withColumn()
+
+Transformations are lazily evaluated.
+
+Spark does not execute them immediately.
 
 ---
 
-## Actions
+# Actions
 
 Operations that trigger execution.
 
 Examples:
 
-* show()
-* collect()
-* count()
+- show()
+- collect()
+- count()
+
+Actions force Spark to execute transformations.
 
 ---
 
@@ -439,3 +575,82 @@ y
 ```bash
 deactivate
 ```
+
+---
+
+# Useful Notes
+
+## Why Files Appeared in VS Code Repo
+
+Your `.ipynb` and `.md` files were saved into the same repository because:
+
+- VS Code was opened inside that repo folder
+- JupyterLab was launched from the same terminal directory
+
+Example:
+
+```bash
+cd ~/Desktop/Data-engineering/Spark
+jupyter lab
+```
+
+Jupyter saves notebooks relative to the folder where it was launched.
+
+So both:
+
+- `.md`
+- `.ipynb`
+
+were automatically created inside the same repo/project folder.
+
+---
+
+# Java + Spark Setup Notes
+
+## Check Java Version
+
+```bash
+java -version
+```
+
+Expected:
+
+```text
+openjdk version "17.x.x"
+```
+
+---
+
+## Activate PySpark Environment
+
+```bash
+source .pyspark-env/bin/activate
+```
+
+---
+
+## Start JupyterLab
+
+```bash
+jupyter lab
+```
+
+---
+
+## Important
+
+You do NOT need to reinstall Java every day.
+
+Once Java 17 is correctly installed and configured, you only need:
+
+```bash
+source .pyspark-env/bin/activate
+```
+
+and
+
+```bash
+jupyter lab
+```
+
+to start working again.
